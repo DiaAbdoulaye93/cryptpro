@@ -1,3 +1,4 @@
+import 'package:cryptpro/pages/cgfbourse.dart';
 import 'package:flutter/material.dart';
 // ignore: depend_on_referenced_packages
 import 'package:flutter_custom_cards/flutter_custom_cards.dart';
@@ -11,7 +12,7 @@ class CadreAccueil extends StatelessWidget {
   String BottomSetTitle;
   Color colorFluctation;
   Icon iconeFluctation;
-  // Widget BottomSetContent;
+  Widget BottomSetContent;
   CadreAccueil({
     super.key,
     required this.icone,
@@ -22,7 +23,7 @@ class CadreAccueil extends StatelessWidget {
     required this.fluctation,
     required this.iconeFluctation,
     this.BottomSetTitle = "teste",
-    // required this.BottomSetContent,
+    required this.BottomSetContent,
   });
   Widget build(BuildContext context) {
     return Container(
@@ -44,9 +45,11 @@ class CadreAccueil extends StatelessWidget {
             ),
             onPressed: () {
               showModalBottomSheet(
+                isScrollControlled:true,
+                backgroundColor: Color.fromRGBO(52, 51, 58, 2),
                   shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.vertical(
-                    top: Radius.circular(7.0),
+                    top: Radius.circular(0.0),
                   )),
                   context: context,
                   builder: (BuildContext context) {
@@ -54,23 +57,23 @@ class CadreAccueil extends StatelessWidget {
                       padding: const EdgeInsets.only(top: 6.0),
                       decoration: const BoxDecoration(
                         borderRadius:
-                            BorderRadius.vertical(top: Radius.circular(7.0)),
-                        color: Color.fromRGBO(4, 79, 120, 1),
+                            BorderRadius.vertical(top: Radius.circular(0.0)),
+                        
                       ),
-                      height: 400,
+                      height: 3500,
                       child: Container(
                           decoration: const BoxDecoration(
                             borderRadius: BorderRadius.vertical(
-                              top: Radius.circular(7.0),
+                              top: Radius.circular(0.0),
                             ),
-                            color: Colors.white,
+                            color: Color.fromRGBO(52, 51, 58, 2),
                           ),
                           child: ListView(shrinkWrap: true, children: [
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 IconButton(
-                                  icon: Icon(Icons.navigate_before),
+                                  icon: Icon(Icons.arrow_back, color: Colors.white),
                                   onPressed: () {
                                     // Do something when the button is pressed
                                     Navigator.pop(context);
@@ -84,7 +87,7 @@ class CadreAccueil extends StatelessWidget {
                                       fontFamily: 'Segoe UI'),
                                 ),
                                 IconButton(
-                                  icon: const Icon(Icons.close),
+                                  icon: const Icon(Icons.dashboard,color: Colors.white,),
                                   onPressed: () {
                                     // Do something when the button is pressed
                                     Navigator.pop(context);
@@ -92,7 +95,7 @@ class CadreAccueil extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            Text("Contenu de modal du bas")
+                            BottomSetContent
                           ])),
                     );
                   });

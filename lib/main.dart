@@ -1,5 +1,6 @@
 import 'package:cryptpro/pages/homescreen.dart';
 import 'package:cryptpro/pages/mainscreen.dart';
+import 'package:cryptpro/widgets/charts.dart';
 import 'package:flutter/material.dart';
 
 void main() {

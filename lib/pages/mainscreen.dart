@@ -1,3 +1,4 @@
+import 'package:cryptpro/widgets/charts.dart';
 import 'package:cryptpro/widgets/mainscreenwidget.dart';
 import 'package:flutter/material.dart';
 import 'package:slider_button/slider_button.dart';
@@ -16,7 +17,7 @@ class MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(10),
+      padding:  EdgeInsets.all(10),
       child: Column(children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -181,10 +182,10 @@ class MainScreenState extends State<MainScreen> {
                ListView(
                 shrinkWrap: true,
                 children: [
-                CadreAccueil(icone: Icon(Icons.bar_chart_sharp,color: Colors.grey,),NomCrypto:"CGF Bourse",avoir: " 75 000",codeCrypto: "CGFB",fluctation: "+ 6,5 %",colorFluctation:Colors.lightGreenAccent,iconeFluctation: Icon(Icons.arrow_upward,color: Colors.lightGreenAccent,size: 12),),
-                CadreAccueil(icone: Icon(Icons.currency_bitcoin_outlined,color: Colors.amber,),NomCrypto:"Bitcoin",avoir: " 10 000",codeCrypto: "BTC",fluctation: "- 2,7 %",colorFluctation:Colors.red,iconeFluctation: Icon(Icons.arrow_downward,color: Colors.red,size: 12),),
-                CadreAccueil(icone: Icon(CryptoFontIcons.BAY,color: Colors.blue,),NomCrypto:"Binance",avoir: " 6 250",codeCrypto: "BNB",fluctation: "1 %",colorFluctation:Colors.red,iconeFluctation: Icon(Icons.arrow_downward,color: Colors.red,size: 12),),
-                CadreAccueil(icone: Icon(CryptoFontIcons.ETH,color: Colors.amber,),NomCrypto:"Etherium",avoir: " 32 500",codeCrypto: "BTC",fluctation: "4 %",colorFluctation:Colors.lightGreenAccent,iconeFluctation: Icon(Icons.arrow_upward,color: Colors.lightGreenAccent,size: 12),),
+                CadreAccueil(icone: Icon(Icons.bar_chart_sharp,color: Colors.grey,),NomCrypto:"CGF Bourse",avoir: " 75 000",codeCrypto: "CGFB",fluctation: "+ 6,5 %",colorFluctation:Colors.lightGreenAccent,iconeFluctation: Icon(Icons.arrow_upward,color: Colors.lightGreenAccent,size: 12),BottomSetContent:const Charts()),
+                CadreAccueil(icone: Icon(Icons.currency_bitcoin_outlined,color: Colors.amber,),NomCrypto:"Bitcoin",avoir: " 10 000",codeCrypto: "BTC",fluctation: "- 2,7 %",colorFluctation:Colors.red,iconeFluctation: Icon(Icons.arrow_downward,color: Colors.red,size: 12),BottomSetContent:const Charts()),
+                CadreAccueil(icone: Icon(CryptoFontIcons.BAY,color: Colors.blue,),NomCrypto:"Binance",avoir: " 6 250",codeCrypto: "BNB",fluctation: "1 %",colorFluctation:Colors.red,iconeFluctation: Icon(Icons.arrow_downward,color: Colors.red,size: 12),BottomSetContent:const Charts()),
+                CadreAccueil(icone: Icon(CryptoFontIcons.ETH,color: Colors.amber,),NomCrypto:"Etherium",avoir: " 32 500",codeCrypto: "ETH",fluctation: "4 %",colorFluctation:Colors.lightGreenAccent,iconeFluctation: Icon(Icons.arrow_upward,color: Colors.lightGreenAccent,size: 12),BottomSetContent:const Charts()),
                 ],
                )
             ],

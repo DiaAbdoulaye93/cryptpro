@@ -7,6 +7,7 @@ environment:
   sdk: '>=2.19.2 <3.0.0'
 
 dependencies:
+  crypto_font_icons: ^1.0.1
   flutter:
     sdk: flutter
   flutter_custom_cards: ^0.2.1
@@ -21,3 +22,13 @@ flutter:
   assets: 
     - "assets/"
   uses-material-design: true
+
+fonts:
+    - family: Roboto
+      fonts:
+        - asset: fonts/Roboto-Light.ttf
+          weight: 300
+        - asset: fonts/Roboto-Thin.ttf
+          weight: 100
+        - asset: fonts/Roboto-Italic.ttf
+          style: italic

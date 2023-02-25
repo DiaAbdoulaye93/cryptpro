@@ -1,6 +1,7 @@
 import 'package:cryptpro/widgets/mainscreenwidget.dart';
 import 'package:flutter/material.dart';
 import 'package:slider_button/slider_button.dart';
+import 'package:crypto_font_icons/crypto_font_icons.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -67,7 +68,7 @@ class MainScreenState extends State<MainScreen> {
           )),
         ),
         Container(
-          padding: const EdgeInsets.only(top: 30, left: 40),
+          padding: const EdgeInsets.only(top: 30, left: 40,right: 20),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -166,7 +167,7 @@ class MainScreenState extends State<MainScreen> {
           ),
         ),
         Container(
-          margin: EdgeInsets.only(top:20,left:35),
+          margin: EdgeInsets.only(top:30,left:10,right: 10),
           child: Column(
             children: [
               Row(
@@ -176,7 +177,16 @@ class MainScreenState extends State<MainScreen> {
                 Text("Voir tout",style: TextStyle(fontSize: 10,fontWeight:FontWeight.bold,color: Colors.white)),
                ],
                 ),
-                CadreAccueil(icone: Icon(Icons.currency_bitcoin_outlined,color: Colors.amber,),NomCrypto:"Bitcoin",avoir: " 32 500",codeCrypto: "BTC",fluctation: "4",)
+                
+               ListView(
+                shrinkWrap: true,
+                children: [
+                CadreAccueil(icone: Icon(Icons.bar_chart_sharp,color: Colors.grey,),NomCrypto:"CGF Bourse",avoir: " 75 000",codeCrypto: "CGFB",fluctation: "+ 6,5 %",colorFluctation:Colors.lightGreenAccent,iconeFluctation: Icon(Icons.arrow_upward,color: Colors.lightGreenAccent,size: 12),),
+                CadreAccueil(icone: Icon(Icons.currency_bitcoin_outlined,color: Colors.amber,),NomCrypto:"Bitcoin",avoir: " 10 000",codeCrypto: "BTC",fluctation: "- 2,7 %",colorFluctation:Colors.red,iconeFluctation: Icon(Icons.arrow_downward,color: Colors.red,size: 12),),
+                CadreAccueil(icone: Icon(CryptoFontIcons.BAY,color: Colors.blue,),NomCrypto:"Binance",avoir: " 6 250",codeCrypto: "BNB",fluctation: "1 %",colorFluctation:Colors.red,iconeFluctation: Icon(Icons.arrow_downward,color: Colors.red,size: 12),),
+                CadreAccueil(icone: Icon(CryptoFontIcons.ETH,color: Colors.amber,),NomCrypto:"Etherium",avoir: " 32 500",codeCrypto: "BTC",fluctation: "4 %",colorFluctation:Colors.lightGreenAccent,iconeFluctation: Icon(Icons.arrow_upward,color: Colors.lightGreenAccent,size: 12),),
+                ],
+               )
             ],
           ),
         )

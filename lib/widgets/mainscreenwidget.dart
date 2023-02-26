@@ -81,8 +81,10 @@ class CadreAccueil extends StatelessWidget {
                                 ),
                                 Text(
                                   BottomSetTitle,
+                                  textAlign: TextAlign.center,
                                   style: const TextStyle(
-                                      color: Colors.black,
+                                      color: Colors.white,
+                                      fontSize: 12,
                                       fontWeight: FontWeight.bold,
                                       fontFamily: 'Segoe UI'),
                                 ),

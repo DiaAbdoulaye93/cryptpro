@@ -1,4 +1,4 @@
-import 'package:cryptpro/widgets/charts.dart';
+import 'package:cryptpro/widgets/cgf_charts.dart';
 import 'package:flutter/material.dart';
 
 class CgfBourse extends StatefulWidget {

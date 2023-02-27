@@ -19,7 +19,7 @@ class MainApp extends StatelessWidget {
         body: Center(
           child:ListView(
             children: const [
-              MainScreen(),
+              HomeScreen(),
             ],
           ),
         ),

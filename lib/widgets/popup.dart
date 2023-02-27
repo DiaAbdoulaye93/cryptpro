@@ -41,7 +41,7 @@ class DialogExample extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("Date"),
+                  const Text("Date"),
                   Text(DateFormat("dd-MM-yyyy").format(DateTime.now()))
                 ],
               ),
@@ -61,23 +61,8 @@ class DialogExample extends StatelessWidget {
             child: const Text('Annuler',style: TextStyle(color: Colors.red),),
           ),
           TextButton(
-            onPressed: () =>
-            AlertDialog(
-                        title: Text('Flash'),
-                        content: Text(
-                            '⚡️A highly customizable, powerful and easy-to-use alerting library for Flutter.'),
-                        actions: <Widget>[
-                          TextButton(
-                            onPressed: () => Navigator.pop(context),
-                            child: Text('YES'),
-                          ),
-                          TextButton(
-                            onPressed: () => Navigator.pop(context),
-                            child: Text('NO'),
-                          ),
-                        ],
-                      ),
-            child: const Text('Confirmer',style: TextStyle(color: Colors.green)),
+            onPressed: () => Navigator.pop(context, 'OK'),
+            child: const Text('Confirmer'),
           ),
         ],
       );

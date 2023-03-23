@@ -1,4 +1,7 @@
+import 'package:cryptpro/data/Model/walletModel.dart';
+import 'package:cryptpro/data/commonrequest.dart';
 import 'package:cryptpro/pages/homescreen.dart';
+import 'package:cryptpro/pages/login.dart';
 import 'package:cryptpro/pages/mainscreen.dart';
 import 'package:cryptpro/widgets/cgf_charts.dart';
 import 'package:cryptpro/widgets/popup.dart';
@@ -13,15 +16,11 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  MaterialApp(
+    return const MaterialApp(
       home: Scaffold(
         backgroundColor: Color.fromRGBO(1, 1, 2, 0.357),
         body: Center(
-          child:ListView(
-            children: const [
-              HomeScreen(),
-            ],
-          ),
+          child: Login(),
         ),
       ),
     );

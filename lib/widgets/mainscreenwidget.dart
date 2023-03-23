@@ -100,7 +100,8 @@ class CadreAccueil extends StatelessWidget {
                             BottomSetContent
                           ])),
                     );
-                  });
+                  }
+                  );
             },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

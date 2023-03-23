@@ -1,9 +1,18 @@
+import 'dart:developer';
+import 'dart:ffi';
+
+import 'package:cryptpro/data/Model/walletModel.dart';
+import 'package:cryptpro/pages/retraits.dart';
 import 'package:cryptpro/widgets/binance_charts.dart';
 import 'package:cryptpro/widgets/cgf_charts.dart';
 import 'package:cryptpro/widgets/mainscreenwidget.dart';
+import 'package:cryptpro/widgets/modalTopSet.dart';
 import 'package:flutter/material.dart';
 import 'package:crypto_font_icons/crypto_font_icons.dart';
+import 'package:top_modal_sheet/top_modal_sheet.dart';
+import 'package:flutter/foundation.dart';
 
+import '../data/commonrequest.dart';
 import '../widgets/bitcoin_charts.dart';
 
 class MainScreen extends StatefulWidget {
@@ -18,6 +27,8 @@ class MainScreen extends StatefulWidget {
 class MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
+    var data = getPublicData("list-wallets");
+    print(data);
     return MaterialApp(
       home: Scaffold(
         backgroundColor: const Color.fromRGBO(1, 1, 2, 0.357),
@@ -29,9 +40,9 @@ class MainScreenState extends State<MainScreen> {
                 child: Column(children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children:  [
+                    children: [
                       IconButton(
-                          icon:  const Icon(Icons.arrow_back),
+                          icon: const Icon(Icons.arrow_back),
                           onPressed: () {
                             // Do something when the button is pressed
                             Navigator.pop(context);
@@ -103,7 +114,8 @@ class MainScreenState extends State<MainScreen> {
                               borderRadius: BorderRadius.circular(12)),
                           child: IconButton(
                               onPressed: () {
-                                const Text("hello");
+                                showTopModalSheet(context,
+                                    ModalTopSet(TopSetContent: RetraitForm()));
                               },
                               icon: const Icon(Icons.call_received))),
                       const Text(
@@ -214,184 +226,37 @@ class MainScreenState extends State<MainScreen> {
                               color: Colors.white)),
                     ],
                   ),
-                  ListView(
-                    shrinkWrap: true,
-                    scrollDirection: Axis.vertical,
-                    physics: const AlwaysScrollableScrollPhysics(),
-                    children: [
-                      CadreAccueil(
-                          icone: const Icon(
-                            Icons.bar_chart_sharp,
-                            color: Colors.grey,
-                          ),
-                          NomCrypto: "CGF Bourse",
-                          avoir: " 75 000",
-                          codeCrypto: "CGFB",
-                          fluctation: "+ 6,5 %",
-                          colorFluctation: Colors.lightGreenAccent,
-                          iconeFluctation: const Icon(Icons.arrow_upward,
-                              color: Colors.lightGreenAccent, size: 12),
-                          BottomSetContent: const Charts(),
-                          BottomSetTitle: "CGF  BOURSE"),
-                      CadreAccueil(
-                          icone: const Icon(
-                            Icons.currency_bitcoin_outlined,
-                            color: Colors.amber,
-                          ),
-                          NomCrypto: "Bitcoin",
-                          avoir: " 10 000",
-                          codeCrypto: "BTC",
-                          fluctation: "- 2,7 %",
-                          colorFluctation: Colors.red,
-                          iconeFluctation: const Icon(Icons.arrow_downward,
-                              color: Colors.red, size: 12),
-                          BottomSetContent: const BitcoinCharts(),
-                          BottomSetTitle: "BITCOIN"),
-                      CadreAccueil(
-                          icone: const Icon(
-                            CryptoFontIcons.BAY,
-                            color: Colors.blue,
-                          ),
-                          NomCrypto: "Binance",
-                          avoir: " 6 250",
-                          codeCrypto: "BNB",
-                          fluctation: "1 %",
-                          colorFluctation: Colors.red,
-                          iconeFluctation: const Icon(Icons.arrow_downward,
-                              color: Colors.red, size: 12),
-                          BottomSetContent: const BinanceCharts(),
-                          BottomSetTitle: "BINANCE"),
-                      CadreAccueil(
-                          icone: const Icon(
-                            CryptoFontIcons.ETH,
-                            color: Colors.amber,
-                          ),
-                          NomCrypto: "Etherium",
-                          avoir: " 32 500",
-                          codeCrypto: "ETH",
-                          fluctation: "+ 4 %",
-                          colorFluctation: Colors.lightGreenAccent,
-                          iconeFluctation: const Icon(Icons.arrow_upward,
-                              color: Colors.lightGreenAccent, size: 12),
-                          BottomSetContent: const Charts()),
-                      CadreAccueil(
-                          icone: const Icon(
-                            CryptoFontIcons.BRK,
-                            color: Colors.red,
-                          ),
-                          NomCrypto: "BRVM",
-                          avoir: " 40 000",
-                          codeCrypto: "BRVM",
-                          fluctation: "+ 0.1 %",
-                          colorFluctation: Colors.lightGreenAccent,
-                          iconeFluctation: const Icon(Icons.arrow_upward,
-                              color: Colors.lightGreenAccent, size: 12),
-                          BottomSetContent: const Charts()),
-                      CadreAccueil(
-                          icone: const Icon(
-                            CryptoFontIcons.DGX,
-                            color: Colors.white,
-                          ),
-                          NomCrypto: "DAX",
-                          avoir: " 162 500",
-                          codeCrypto: "DAX",
-                          fluctation: "+ 2.9 %",
-                          colorFluctation: Colors.lightGreenAccent,
-                          iconeFluctation: const Icon(Icons.arrow_upward,
-                              color: Colors.lightGreenAccent, size: 12),
-                          BottomSetContent: const Charts()),
-                      CadreAccueil(
-                          icone: const Icon(
-                            CryptoFontIcons.CLAM,
-                            color: Colors.greenAccent,
-                          ),
-                          NomCrypto: "BEL20 INDEX",
-                          avoir: " 35 000",
-                          codeCrypto: "BI20",
-                          fluctation: "- 0.9 %",
-                          colorFluctation: Colors.red,
-                          iconeFluctation: const Icon(Icons.arrow_downward,
-                              color: Colors.red, size: 12),
-                          BottomSetContent: const Charts()),
-
-                            CadreAccueil(
-                          icone: const Icon(
-                            CryptoFontIcons.CLOAK,
-                            color: Colors.greenAccent,
-                          ),
-                          NomCrypto: "CAC 40",
-                          avoir: " 99 000",
-                          codeCrypto: "CAC 40",
-                          fluctation: "- 0.9 %",
-                          colorFluctation: Colors.red,
-                          iconeFluctation: const Icon(Icons.arrow_downward,
-                              color: Colors.red, size: 12),
-                          BottomSetContent: const Charts()),
-
-
-
-                            CadreAccueil(
-                          icone: const Icon(
-                            CryptoFontIcons.SJCX,
-                            color: Colors.purple,
-                          ),
-                          NomCrypto: "SDF 120",
-                          avoir: " 9 000",
-                          codeCrypto: " SDF 120",
-                          fluctation: "- 0.9 %",
-                          colorFluctation: Colors.red,
-                          iconeFluctation: const Icon(Icons.arrow_downward,
-                              color: Colors.red, size: 12),
-                          BottomSetContent: const Charts()),
-
-
-
-
-                            CadreAccueil(
-                          icone: const Icon(
-                            CryptoFontIcons.NXT,
-                            color: Colors.yellowAccent,
-                          ),
-                          NomCrypto: "NEXT BIOTEC",
-                          avoir: " 199 100",
-                          codeCrypto: "NB",
-                          fluctation: "- 0.9 %",
-                          colorFluctation: Colors.red,
-                          iconeFluctation: const Icon(Icons.arrow_downward,
-                              color: Colors.red, size: 12),
-                          BottomSetContent: const Charts()),
-
-
-
-                            CadreAccueil(
-                          icone: const Icon(
-                            CryptoFontIcons.ICN,
-                            color: Colors.blueGrey,
-                          ),
-                          NomCrypto: "AEX25 INDEX",
-                          avoir: " 930 000",
-                          codeCrypto: "AI25",
-                          fluctation: "- 0.9 %",
-                          colorFluctation: Colors.red,
-                          iconeFluctation: const Icon(Icons.arrow_downward,
-                              color: Colors.red, size: 12),
-                          BottomSetContent: const Charts()),
-
-
-                            CadreAccueil(
-                          icone: const Icon(
-                            CryptoFontIcons.LSK,
-                            color: Colors.lime,
-                          ),
-                          NomCrypto: "LISI",
-                          avoir: " 2 030 000",
-                          codeCrypto: "CAC 40",
-                          fluctation: "- 0.75 %",
-                          colorFluctation: Colors.red,
-                          iconeFluctation: const Icon(Icons.arrow_downward,
-                              color: Colors.red, size: 12),
-                          BottomSetContent: const Charts()),
-                    ],
+                  FutureBuilder<List>(
+                    future: getPublicData("list-wallets"),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: snapshot.data!.length,
+                          itemBuilder: (context, index) {
+                            return CadreAccueil(
+                                icone:  Icon(
+                                  IconData(int.parse(snapshot.data![index]?.icone ) , fontFamily: 'MaterialIcons'),
+                                  color: Colors.grey,
+                                ),
+                                NomCrypto:
+                                    snapshot.data![index].name.toString(),
+                                avoir: snapshot.data![index].montant.toString(),
+                                codeCrypto:
+                                    snapshot.data![index].code.toString(),
+                                fluctation: "+ 6,5 %",
+                                colorFluctation: Colors.lightGreenAccent,
+                                iconeFluctation: const Icon(Icons.arrow_upward,
+                                    color : Colors.lightGreenAccent, size: 12),
+                                BottomSetContent: const Charts(),
+                                BottomSetTitle: "CGF  BOURSE");
+                          },
+                        );
+                      } else if (snapshot.hasError) {
+                        return Text('${snapshot.error}');
+                      }
+                      return const CircularProgressIndicator();
+                    },
                   )
                 ],
               ),
@@ -399,13 +264,12 @@ class MainScreenState extends State<MainScreen> {
           ],
         )),
         bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: const Color.fromRGBO(1, 1, 2, 0.357),
+          backgroundColor: const Color.fromRGBO(1, 1, 2, 0.357),
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: Icon(Icons.home_sharp),
               label: 'Accueil',
             ),
-           
             BottomNavigationBarItem(
               icon: Icon(Icons.person_2_rounded),
               label: 'Assistance',

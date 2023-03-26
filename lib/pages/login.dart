@@ -1,21 +1,29 @@
 import 'dart:async';
+import 'dart:developer';
+import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:passcode_screen/circle.dart';
 import 'package:passcode_screen/keyboard.dart';
 import 'package:passcode_screen/passcode_screen.dart';
 
+import '../data/commonrequest.dart';
+import 'dart:developer' as developer;
+import 'package:jwt_decode/jwt_decode.dart';
+
 class Login extends StatefulWidget {
   const Login({super.key});
-  
+
   @override
-   LoginState createState() {
+  LoginState createState() {
     return LoginState();
   }
 }
 
 class LoginState extends State<Login> {
-  String storedPasscode = '1111';
+  bool _isLoading = false;
+  String _errorMessage = '';
+
   final StreamController<bool> _verificationNotifier =
       StreamController<bool>.broadcast();
 
@@ -25,58 +33,19 @@ class LoginState extends State<Login> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: showLockScreen(
-              context,
-              opaque: false,
-              cancelButton: const Text(
-                'Annuler',
-                style: TextStyle(fontSize: 16, color: Colors.white),
-                semanticsLabel: 'Annuler',
-              ),
-            )
-      ),
+          child: showLockScreen(
+        context,
+        opaque: false,
+        cancelButton: const Text(
+          'Annuler',
+          style: TextStyle(fontSize: 16, color: Colors.white),
+          semanticsLabel: 'Annuler',
+        ),
+      )),
     );
   }
 
-  // _defaultLockScreenButton(BuildContext context) => MaterialButton(
-  //       color: Theme.of(context).primaryColor,
-  //       child: const Text('Open Default Lock Screen'),
-  //       onPressed: () {
-  //         _showLockScreen(
-  //           context,
-  //           opaque: false,
-  //           cancelButton: const Text(
-  //             'Cancel',
-  //             style: TextStyle(fontSize: 16, color: Colors.white),
-  //             semanticsLabel: 'Cancel',
-  //           ),
-  //         );
-  //       },
-  //     );
-
-  // _customColorsLockScreenButton(BuildContext context) {
-  //   return MaterialButton(
-  //     color: Theme.of(context).primaryColor,
-  //     child: const Text('Open Custom Lock Screen'),
-  //     onPressed: () {
-  //       _showLockScreen(context,
-  //           opaque: false,
-  //           circleUIConfig: const CircleUIConfig(
-  //               borderColor: Colors.blue,
-  //               fillColor: Colors.blue,
-  //               circleSize: 30),
-  //           keyboardUIConfig: const KeyboardUIConfig(
-  //               digitBorderWidth: 2, primaryColor: Colors.blue),
-  //           cancelButton: const Icon(
-  //             Icons.arrow_back,
-  //             color: Colors.blue,
-  //           ),
-  //           digits: ['一', '二', '三', '四', '五', '六', '七', '八', '九', '零']);
-  //     },
-  //   );
-  // }
-
-    showLockScreen (
+  showLockScreen(
     BuildContext context, {
     required bool opaque,
     CircleUIConfig? circleUIConfig,
@@ -84,38 +53,64 @@ class LoginState extends State<Login> {
     required Widget cancelButton,
     List<String>? digits,
   }) {
-     return PasscodeScreen(
-            title: const Text(
-              'Entrer votre code',
-              textAlign: TextAlign.center,
-              style: TextStyle(color: Colors.white, fontSize: 28),
-            ),
-            circleUIConfig: circleUIConfig,
-            keyboardUIConfig: keyboardUIConfig,
-            passwordEnteredCallback:_onPasscodeEntered,
-            cancelButton: cancelButton,
-            deleteButton: const Text(
-              'Effacer',
-              style: TextStyle(fontSize: 16, color: Colors.white),
-              semanticsLabel: 'Effacer',
-            ),
-            shouldTriggerVerification: _verificationNotifier.stream,
-            backgroundColor: Colors.black.withOpacity(0.8),
-            cancelCallback: _onPasscodeCancelled,
-            digits: digits,
-            passwordDigits: 4,
-            bottomWidget: _buildPasscodeRestoreButton(),
-         
-        );
+    return PasscodeScreen(
+      title: Column(
+        children: [
+          Container(
+            height: 200,
+            child: Image.asset("assets/homePerson.gif"),
+          ),
+          const Text(
+            "Saisir votre code secrêt",
+            style: TextStyle(color: Colors.white, letterSpacing: 2),
+          )
+        ],
+      ),
+      circleUIConfig: circleUIConfig,
+      keyboardUIConfig: keyboardUIConfig,
+      passwordEnteredCallback: _onPasscodeEntered,
+      cancelButton: cancelButton,
+      deleteButton: const Text(
+        'Effacer',
+        style: TextStyle(fontSize: 16, color: Colors.white),
+        semanticsLabel: 'Effacer',
+      ),
+      shouldTriggerVerification: _verificationNotifier.stream,
+      backgroundColor: Colors.black.withOpacity(0.8),
+      cancelCallback: _onPasscodeCancelled,
+      digits: digits,
+      passwordDigits: 4,
+      // bottomWidget: _buildPasscodeRestoreButton(),
+    );
   }
 
+  _onPasscodeEntered(String enteredPasscode) async {
+    // bool isValid = storedPasscode == enteredPasscode;
+    // _verificationNotifier.add(isValid);
+    // if (isValid) {
+    //   setState(() {
+    //     this.isAuthenticated = isValid;
+    //   });
+    // }
+    try {
+      const telephone = "772258817";
+      final password = enteredPasscode;
+      dynamic response = login(telephone, password);
+      var value = await response;
+      Map<String, dynamic> payload = Jwt.parseJwt('eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJKV1QgRGVjb2RlIiwiaWF0IjoxNjA4NTgxNzczLCJleHAiOjE2NDAxMTc3NzMsImF1ZCI6Ind3dy5qd3RkZWNvZGUuY29tIiwic3ViIjoiQSBzYW1wbGUgSldUIiwibmFtZSI6IlZhcnVuIFMgQXRocmV5YSIsImVtYWlsIjoidmFydW4uc2F0aHJleWFAZ21haWwuY29tIiwicm9sZSI6IkRldmVsb3BlciJ9.vXE9ogUeMMsOTz2XQYHxE2hihVKyyxrhi_qfhJXamPQ');
+      print(payload);
+      if (value['status'] == true) {
+        Navigator.pushNamed(context, '/home');
+      } else {
+        _verificationNotifier.add(false);
+      }
 
-  _onPasscodeEntered(String enteredPasscode) {
-    bool isValid = storedPasscode == enteredPasscode;
-    _verificationNotifier.add(isValid);
-    if (isValid) {
+      // Save login token to shared preferences or other storage
+      // Redirect user to home screen
+    } catch (e) {
       setState(() {
-        this.isAuthenticated = isValid;
+        _isLoading = false;
+        _errorMessage = e.toString();
       });
     }
   }
@@ -130,26 +125,26 @@ class LoginState extends State<Login> {
     super.dispose();
   }
 
-  _buildPasscodeRestoreButton() => Align(
-        alignment: Alignment.bottomCenter,
-        child: Container(
-          margin: const EdgeInsets.only(bottom: 10.0, top: 20.0),
-          child: TextButton(
-            onPressed: _resetAppPassword,
-            child: const Text(
-              "Réinitialiser le mot de passe",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.white,
-                  fontWeight: FontWeight.w300),
-            ),
-            // splashColor: Colors.white.withOpacity(0.4),
-            // highlightColor: Colors.white.withOpacity(0.2),
-            // ),
-          ),
-        ),
-      );
+  // _buildPasscodeRestoreButton() => Align(
+  //       alignment: Alignment.bottomCenter,
+  //       child: Container(
+  //         margin: const EdgeInsets.only(bottom: 10.0, top: 20.0),
+  //         child: TextButton(
+  //           onPressed: _resetAppPassword,
+  //           child: const Text(
+  //             "Réinitialiser le mot de passe",
+  //             textAlign: TextAlign.center,
+  //             style: TextStyle(
+  //                 fontSize: 16,
+  //                 color: Colors.white,
+  //                 fontWeight: FontWeight.w300),
+  //           ),
+  //           // splashColor: Colors.white.withOpacity(0.4),
+  //           // highlightColor: Colors.white.withOpacity(0.2),
+  //           // ),
+  //         ),
+  //       ),
+  //     );
 
   _resetAppPassword() {
     Navigator.maybePop(context).then((result) {

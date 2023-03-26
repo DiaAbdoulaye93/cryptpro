@@ -7,14 +7,16 @@ class Wallet {
   String? name;
   String? code;
   String? icone;
-  int montant;
+  double montant;
+  double taux;
 
   Wallet(
       {required this.id,
       required this.name,
       required this.code,
       this.icone,
-      required this.montant});
+      required this.montant,
+      required this.taux});
 
   factory Wallet.fromJson(Map<String, dynamic> json) {
     return Wallet(
@@ -23,6 +25,7 @@ class Wallet {
       code: json['code'],
       icone: json['icone'],
       montant: json['montant'],
+      taux: json['taux'],
     );
   }
 

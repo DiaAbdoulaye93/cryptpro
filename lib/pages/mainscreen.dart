@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 import 'dart:ffi';
 
@@ -11,9 +12,11 @@ import 'package:flutter/material.dart';
 import 'package:crypto_font_icons/crypto_font_icons.dart';
 import 'package:top_modal_sheet/top_modal_sheet.dart';
 import 'package:flutter/foundation.dart';
-
+import 'package:intl/intl.dart';
 import '../data/commonrequest.dart';
 import '../widgets/bitcoin_charts.dart';
+import 'dart:developer' as developer;
+import 'package:http/http.dart' as http;
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -26,9 +29,25 @@ class MainScreen extends StatefulWidget {
 
 class MainScreenState extends State<MainScreen> {
   @override
+      late double TotalWallet = 0.0;
+  void initState() {
+    super.initState();
+    getAmount();
+  }
+var formatter = NumberFormat("#,###,000", "fr_FR");
+ getAmount() async {
+          var  result = await getPublicData2("list-wallets");
+           setState(() {
+          for (var element in result) {
+            TotalWallet = TotalWallet + element['taux'] * element['montant'];
+          }
+          });
+        }   
+
+  // The function that fetches data from the API
+
+  @override
   Widget build(BuildContext context) {
-    var data = getPublicData("list-wallets");
-    print(data);
     return MaterialApp(
       home: Scaffold(
         backgroundColor: const Color.fromRGBO(1, 1, 2, 0.357),
@@ -55,9 +74,9 @@ class MainScreenState extends State<MainScreen> {
                     padding: const EdgeInsets.only(top: 10),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
+                      children: [
                         Text(
-                          "1 235 975",
+                          formatter.format(TotalWallet),
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 30,
@@ -234,20 +253,26 @@ class MainScreenState extends State<MainScreen> {
                           shrinkWrap: true,
                           itemCount: snapshot.data!.length,
                           itemBuilder: (context, index) {
+                            double montantCfa = snapshot.data![index].montant *
+                                snapshot.data![index].taux;
+
                             return CadreAccueil(
-                                icone:  Icon(
-                                  IconData(int.parse(snapshot.data![index]?.icone ) , fontFamily: 'MaterialIcons'),
+                                icone: Icon(
+                                  IconData(
+                                      int.parse(snapshot.data![index]?.icone),
+                                      fontFamily: 'MaterialIcons'),
                                   color: Colors.grey,
                                 ),
                                 NomCrypto:
                                     snapshot.data![index].name.toString(),
-                                avoir: snapshot.data![index].montant.toString(),
+                                avoir:
+                                    "${snapshot.data![index].montant} ( ${formatter.format(montantCfa)} Xof) ",
                                 codeCrypto:
                                     snapshot.data![index].code.toString(),
                                 fluctation: "+ 6,5 %",
                                 colorFluctation: Colors.lightGreenAccent,
                                 iconeFluctation: const Icon(Icons.arrow_upward,
-                                    color : Colors.lightGreenAccent, size: 12),
+                                    color: Colors.lightGreenAccent, size: 12),
                                 BottomSetContent: const Charts(),
                                 BottomSetTitle: "CGF  BOURSE");
                           },
@@ -257,7 +282,7 @@ class MainScreenState extends State<MainScreen> {
                       }
                       return const CircularProgressIndicator();
                     },
-                  )
+                  ),
                 ],
               ),
             ),
@@ -283,3 +308,6 @@ class MainScreenState extends State<MainScreen> {
     );
   }
 }
+
+
+

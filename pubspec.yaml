@@ -16,6 +16,7 @@ dependencies:
   flutter_lock_screen: ^2.0.1
   flutter_pin_code_fields: ^2.1.0
   http: ^0.13.5
+  jwt_decode: ^0.3.1
   passcode_screen: ^2.0.1
   pin_code_fields: ^7.4.0
   select_form_field: ^2.2.0
